@@ -1,0 +1,62 @@
+/* Global design tokens and reset — shared by Tree.css and ManagePage.css */
+
+:root {
+  color-scheme: light;
+
+  --ink: #111111;
+  --ink-soft: #4a4a4a;
+  --muted: #767676;
+  --line-soft: #d9d9d9;
+  --surface: #ffffff;
+  --surface-sunken: #f4f4f4;
+  --accent: #d6293e;
+
+  --font-sans: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 20px;
+  --space-5: 32px;
+  --space-6: 48px;
+
+  --radius: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  font-size: 13px;
+}
+
+table {
+  font-variant-numeric: tabular-nums;
+}
