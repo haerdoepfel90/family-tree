@@ -55,7 +55,7 @@ function IndividualDrawer({open, editId, onClose, onSaved}) {
         }
 
         const res = await fetch(
-            isEdit ? `/api/v1/individuals/${editId}` : '/api/v1/individuals/create', {
+            isEdit ? `/api/v1/individuals/${editId}` : '/api/v1/individuals', {
                 method: isEdit ? 'PATCH' : 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
@@ -181,7 +181,7 @@ function FamilyDrawer({open, editId, individuals, onClose, onSaved}) {
             children_list: form.children.filter(Boolean).map(Number),
         };
         const res = await fetch(
-            isEdit ? `/api/v1/families/${editId}` : '/api/v1/families/create', {
+            isEdit ? `/api/v1/families/${editId}` : '/api/v1/families', {
                 method: isEdit ? 'PATCH' : 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
