@@ -3,6 +3,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+*__init__.py
 
 # data
 *.db
