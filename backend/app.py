@@ -1,17 +1,27 @@
-from fastapi import FastAPI, File, UploadFile
+import shutil
+import time
+import uuid
+from pathlib import Path
+
+from fastapi import FastAPI, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from typing import Annotated
-from pathlib import Path
-import shutil
 
-from data.models import Family, FamilyPatch, Individual, IndividualPatch
+from data.models import (
+    DocumentLink,
+    DocumentPatch,
+    Family,
+    FamilyPatch,
+    Individual,
+    IndividualPatch,
+)
 from shared.db import db_conn, db_init
 
 db_init()
 
 MEDIA_DIR = Path(__file__).parent.resolve() / "media"
 PORTRAIT_DIR = MEDIA_DIR / "portraits"
+DOCUMENT_DIR = MEDIA_DIR / "documents"
 app = FastAPI()
 
 
@@ -257,152 +267,113 @@ def get_families():
     return families
 
 
-@app.get("/api/v1/tree")
-def get_tree():
+@app.post("/api/v1/documents")
+async def upload_document(file: UploadFile):
+    ext = Path(file.filename).suffix.lower()
+
+    file_uuid = str(uuid.uuid4())
+
+    filename = f"{file_uuid}{ext}"
+
+    uploaded_at = time.time()
+
+    DESTINATION = DOCUMENT_DIR / filename
+
+    with DESTINATION.open("wb") as f:
+        shutil.copyfileobj(file.file, f)
+
     with db_conn() as con:
-        individuals = con.execute(
-            "SELECT * FROM individuals ORDER BY birth_date"
-        ).fetchall()
-        families = con.execute("SELECT * FROM families").fetchall()
-        family_children = con.execute("SELECT * FROM family_children").fetchall()
-
-    elements = []
-
-    for person in individuals:
-        name = " ".join(filter(None, [person["given_name"], person["surname"]]))
-        if person["maiden_name"]:
-            name += f" ({person['maiden_name']})"
-        if person["birth_date"]:
-            name += f"\n{person['birth_date'][:4]}"
-
-        elements.append(
-            {
-                "data": {
-                    "id": f"i{person['id']}",
-                    "label": name,
-                }
-            }
-        )
-
-    for family in families:
-        fid = f"f{family['id']}"
-        elements.append({"data": {"id": fid, "invisible": "yes"}})
-
-        for partner_id in (family["partner1_id"], family["partner2_id"]):
-            if partner_id is not None:
-                elements.append(
-                    {
-                        "data": {
-                            "id": f"i{partner_id}->{fid}",
-                            "source": f"i{partner_id}",
-                            "target": fid,
-                            "relationship": "partner",
-                        }
-                    }
-                )
-
-    for link in family_children:
-        elements.append(
-            {
-                "data": {
-                    "id": f"f{link['family_id']}->i{link['child_id']}",
-                    "source": f"f{link['family_id']}",
-                    "target": f"i{link['child_id']}",
-                    "relationship": "child",
-                }
-            }
-        )
-
-    return elements
-
-
-@app.get("/api/v1/tree/individual/{individual_id}/immediate")
-def get_immediate_family(individual_id: int):
-    with db_conn() as con:
-        individual = con.execute(
-            "SELECT * FROM individuals WHERE id=?;", (individual_id,)
-        ).fetchone()
-        family_as_child_row = con.execute(
-            "SELECT family_id FROM family_children WHERE child_id=?;", (individual_id,)
-        ).fetchone()
-        family_as_parent_row = con.execute(
-            "SELECT id FROM families WHERE partner1_id=? OR partner2_id=?;",
-            (individual_id, individual_id),
-        ).fetchone()
-
-        family_as_child_id = (
-            family_as_child_row["family_id"] if family_as_child_row else None
-        )
-        family_as_parent_id = (
-            family_as_parent_row["id"] if family_as_child_row else None
-        )
-
-        parents = []
-        siblings = []  # initialize empty lists to prevent missing error
-        children = []
-        spouses = []
-
-        if family_as_child_id is not None:
-            fam = con.execute(
-                "SELECT partner1_id, partner2_id FROM families WHERE id=?;",
-                (family_as_child_id,),
-            ).fetchone()
-
-            parents = [pid for pid in (fam["partner1_id"], fam["partner2_id"]) if pid]
-
-        sibs = con.execute(
-            "SELECT child_id FROM family_children WHERE family_id=? AND child_id !=?;",
+        cursor = con.execute(
+            """
+            INSERT INTO documents (uuid, ext, uploaded_at) VALUES (?,?,?);""",
             (
-                family_as_child_id,
-                individual_id,
+                file_uuid,
+                ext,
+                uploaded_at,
             ),
-        ).fetchall()
-        siblings = [row["child_id"] for row in sibs]
-
-        sps = con.execute(
-            "SELECT partner1_id, partner2_id FROM families WHERE id = ?;",
-            (family_as_parent_id,),
-        ).fetchone()
-
-        spouses = []
-        if sps:
-            spouse_id = (
-                sps["partner2_id"]
-                if sps["partner1_id"] == individual_id
-                else sps["partner1_id"]
-            )
-            if spouse_id:
-                spouses.append(spouse_id)
-
-        childs = con.execute(
-            "SELECT child_id FROM family_children WHERE family_id=?;",
-            (family_as_parent_id,),
-        ).fetchall()
-        children = [row["child_id"] for row in childs]
-
-        elements = []
-
-        for i, child in enumerate(children):
-            elements.append(
-                {
-                    "id": f"i{child}",
-                    "position": {"x": i * 300, "y": 0},
-                    "data": {"label": "child"},
-                    "type": "output",
-                }
-            )
-
-        elements.append(
-            {
-                "id": f"i{individual_id}",
-                "position": {"x": len(children) * 300 / 2 - 150, "y": 50},
-                "data": {"label": "individual"},
-                "type": "input",
-            }
         )
+        con.commit()
+        doc_id = cursor.lastrowid
+    return {
+        "ok": True,
+        "id": doc_id,
+    }
 
-        print(elements)
+
+@app.patch("/api/v1/documents/{document_id}")
+def edit_document(doc: DocumentPatch, document_id: int):
+    fields = doc.model_dump(exclude_unset=True)
+    print(fields)
+
+    with db_conn() as con:
+        if fields:
+            patched_cols = ", ".join(f"{key} = ?" for key in fields)
+            values = list(fields.values()) + [document_id]
+
+            print(values)
+
+            con.execute(
+                f"""
+                UPDATE documents SET {patched_cols} WHERE id=?""",
+                values,
+            )
+            con.commit()
+
+    return {"ok": True}
+
+
+@app.post("/api/v1/documents/{id}/links")
+def link_document(link: DocumentLink, id: int):
+    with db_conn() as con:
+        con.execute(
+            """
+            INSERT INTO document_links (document_id, subject_type, subject_id, role) VALUES (?,?,?,?)""",
+            (
+                id,
+                link.subject_type,
+                link.subject_id,
+                link.role,
+            ),
+        )
+    return {"ok": True}
+
+
+@app.delete("/api/v1/documents/{document_id}")
+def delete_document(document_id: int):
+    with db_conn() as con:
+        con.execute(f"""
+            DELETE FROM documents WHERE id={document_id};""")
+
+    return {"ok": True}
+
+
+@app.get("/api/v1/documents/{document_id}")
+def get_document(document_id):
+    with db_conn() as con:
+        doc = con.execute(f"""
+            SELECT * FROM documents WHERE id={document_id}""").fetchone()
+
+        links = con.execute(f"""
+            SELECT * FROM document_links WHERE document_id = {document_id};""").fetchall()
+
+        out = dict(doc)
+        out["links"] = [dict(link) for link in links]
+
+        return out
+
+
+@app.delete("/api/v1/documents/{document_id}/links")
+def unlink_document(document_id: int, link: DocumentLink):
+    with db_conn() as con:
+        con.execute(
+            """
+            DELETE FROM document_links
+            WHERE document_id = ? AND subject_type = ? AND subject_id = ?
+            """,
+            (document_id, link.subject_type, link.subject_id),
+        )
+        con.commit()
+    return {"ok": True}
 
 
 app.mount("/media", StaticFiles(directory=MEDIA_DIR), name="media")
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")

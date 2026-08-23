@@ -22,7 +22,29 @@ CREATE TABLE IF NOT EXISTS families (
 );
 
 CREATE TABLE IF NOT EXISTS family_children (
-    family_id INTEGER REFERENCES families(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    child_id INTEGER REFERENCES individuals(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    family_id   INTEGER REFERENCES families(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    child_id    INTEGER REFERENCES individuals(id) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (family_id, child_id)
+);
+
+CREATE TABLE IF NOT EXISTS documents (
+    id              INTEGER PRIMARY KEY,
+    uuid            TEXT NOT NULL UNIQUE,
+    display_name    TEXT,
+    kind            TEXT,
+    caption         TEXT,
+    date            TEXT,
+    place           TEXT,
+    source          TEXT,
+    ext             TEXT NOT NULL,
+    uploaded_at     TEXT,
+    uploaded_by     TEXT
+);
+
+CREATE TABLE IF NOT EXISTS document_links (
+    document_id     INTEGER NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+    subject_type    TEXT NOT NULL,
+    subject_id      TEXT NOT NULL,
+    role            TEXT,
+    PRIMARY KEY (document_id, subject_type, subject_id)
 );

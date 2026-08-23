@@ -38,3 +38,18 @@ class FamilyPatch(BaseModel):
     partner_2: int | None = None
     wedding_date: str | None = None
     children_list: list[int] | None = None
+
+
+class DocumentPatch(BaseModel):
+    display_name: str | None = None
+    kind: str | None = None
+    caption: str | None = None
+    date: str | None = None
+    place: str | None = None
+    source: str | None = None
+
+
+class DocumentLink(BaseModel):
+    subject_type: str
+    subject_id: int
+    role: str | None = None
