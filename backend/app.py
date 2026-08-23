@@ -111,7 +111,7 @@ def get_individual(individual_id: int):
 
     with db_conn() as con:
         person = con.execute(
-            f"SELECT * FROM individuals WHERE id={individual_id};"
+            "SELECT * FROM individuals WHERE id=?;", (individual_id,)
         ).fetchone()
 
     return dict(person)
@@ -140,8 +140,9 @@ def patch_individual(individual_id: int, patch: IndividualPatch):
 def delete_individual(individual_id: int):
     with db_conn() as con:
         con.execute(
-            f"""
-            DELETE FROM individuals WHERE id={individual_id};"""
+            """
+            DELETE FROM individuals WHERE id=?;""",
+            (individual_id,),
         )
         con.commit()
     return {"ok": True, "id": individual_id}
@@ -341,20 +342,29 @@ def link_document(link: DocumentLink, id: int):
 @app.delete("/api/v1/documents/{document_id}")
 def delete_document(document_id: int):
     with db_conn() as con:
-        con.execute(f"""
-            DELETE FROM documents WHERE id={document_id};""")
+        con.execute(
+            """
+            DELETE FROM documents WHERE id=?;""",
+            (document_id,),
+        )
 
     return {"ok": True}
 
 
 @app.get("/api/v1/documents/{document_id}")
-def get_document(document_id):
+def get_document(document_id: int):
     with db_conn() as con:
-        doc = con.execute(f"""
-            SELECT * FROM documents WHERE id={document_id}""").fetchone()
+        doc = con.execute(
+            """
+            SELECT * FROM documents WHERE id=?""",
+            (document_id),
+        ).fetchone()
 
-        links = con.execute(f"""
-            SELECT * FROM document_links WHERE document_id = {document_id};""").fetchall()
+        links = con.execute(
+            """
+            SELECT * FROM document_links WHERE document_id = ?;""",
+            (document_id),
+        ).fetchall()
 
         out = dict(doc)
         out["links"] = [dict(link) for link in links]
