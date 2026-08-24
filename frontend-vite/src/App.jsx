@@ -6,6 +6,7 @@ import placeholderAvatar from './assets/placeholder-avatar.jpg';
 import '@xyflow/react/dist/style.css';
 import './Tree.css';
 import ManagePage from './ManagePage';
+import DetailPage from './DetailPage';
 
 
 const CARD_WIDTH = 120;
@@ -607,6 +608,9 @@ function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
             })}
           </div>
         </>}
+        <div>
+          <Link to={`/detail/${person.id}`}>Detail Page</Link>
+        </div>
       </section>
     </aside>
   );
@@ -650,6 +654,7 @@ export default function App() {
         <ReactFlowProvider>
           <Tree />
         </ReactFlowProvider>} />
+        <Route path="/detail/:id" element={< DetailPage/>}></Route>
       <Route path="/manage" element={<ManagePage />} />
     </Routes>
   );
