@@ -130,3 +130,21 @@ def delete_individual(individual_id: int):
         )
         con.commit()
     return {"ok": True, "id": individual_id}
+
+
+@router.get("/{individual_id}/documents")
+def get_individual_documents(individual_id: int):
+    with db_conn() as con:
+        docs = con.execute(
+            """
+            SELECT d.*, dl.role
+            FROM documents d
+            JOIN document_links dl ON dl.document_id = d.id
+            WHERE dl.subject_type = 'individual'
+                AND dl.subject_id = ?
+            ORDER BY d.date;
+            """,
+            (individual_id,),
+        ).fetchall()
+
+    return [dict(doc) for doc in docs]
