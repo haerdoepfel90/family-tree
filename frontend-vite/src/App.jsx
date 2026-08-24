@@ -22,7 +22,6 @@ const CARD_HEIGHT = 180;
 const CARD_GAP = 100;
 const PARTNER_GAP = 20;
 const GAP_Y = 100;
-const TREE_GAP = 200;
 const ROW_HEIGHT = CARD_HEIGHT + GAP_Y;
 
 const hiddenHandle = {
@@ -140,19 +139,19 @@ function getPersonData(individual_id, peopleById) {
 }
 
 function leftExtent(node) {
-	if (node.type == "individual") {
+	if (node.type === "individual") {
 		return CARD_WIDTH / 2;
 	}
-	if (node.type == "union") {
+	if (node.type === "union") {
 		return PARTNER_GAP / 2 + CARD_WIDTH;
 	}
 }
 
 function rightExtent(node) {
-	if (node.type == "individual") {
+	if (node.type === "individual") {
 		return CARD_WIDTH / 2;
 	}
-	if (node.type == "union") {
+	if (node.type === "union") {
 		return PARTNER_GAP / 2 + CARD_WIDTH;
 	}
 }
@@ -253,7 +252,7 @@ function apportion(node, defaultAncestor) {
 	return defaultAncestor;
 }
 
-function findRootFamilies(people, families) {
+function findRootFamilies(families) {
 	// find root families by checking that both partners of a family are not a child of any other family
 
 	const childIds = new Set(); // set which contains all individual_ids present in any family
@@ -346,7 +345,7 @@ function buildTree(root, people, families, depth = 0) {
 }
 
 function firstWalk(node) {
-	if (node.children.length == 0) {
+	if (node.children.length === 0) {
 		// if node has any children
 
 		if (node.leftSibling) {
@@ -559,7 +558,7 @@ function Tree() {
 				nodeTypes={nodeTypes}
 				fitView={{ maxZoom: 1 }}
 				minZoom={0.1}
-				onNodeClick={(event, node) => {
+				onNodeClick={(node) => {
 					if (node.type === "person") {
 						const id = Number(node.id.slice(1));
 						setSelected(id);
@@ -614,12 +613,13 @@ function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 
 	return (
 		<aside className="person-detail open">
-			<button className="person-detail__close" onClick={onClose}>
+			<button type="button" className="person-detail__close" onClick={onClose}>
 				×
 			</button>
 			<img
 				className="person-detail__portrait"
 				src={person.portrait_url || placeholderAvatar}
+				alt="portrait"
 			/>
 			<h2>
 				{person.given_name} {person.second_name ?? ""} {person.surname}
@@ -658,6 +658,7 @@ function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 								if (!p) return null;
 								return (
 									<button
+										type="button"
 										key={pid}
 										className="relative-button"
 										onClick={() => onSelect(pid)}
@@ -679,6 +680,7 @@ function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 								if (!s) return null;
 								return (
 									<button
+										type="button"
 										key={sid}
 										className="relative-button"
 										onClick={() => onSelect(sid)}
@@ -700,6 +702,7 @@ function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 								if (!s) return null;
 								return (
 									<button
+										type="button"
 										key={sid}
 										className="relative-button"
 										onClick={() => onSelect(sid)}
@@ -721,6 +724,7 @@ function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 								if (!c) return null;
 								return (
 									<button
+										type="button"
 										key={cid}
 										className="relative-button"
 										onClick={() => onSelect(cid)}
