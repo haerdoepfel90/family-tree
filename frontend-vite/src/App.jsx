@@ -1,12 +1,13 @@
 import { ReactFlow, Background, BackgroundVariant, Controls, useReactFlow } from '@xyflow/react';
 import { useState, useEffect } from 'react';
 import { Handle, Position, ReactFlowProvider } from '@xyflow/react';
-import { Routes, Route, Link, useParams } from 'react-router-dom';
+import { Routes, Route, Link, useParams } from 'react-router';
 import placeholderAvatar from './assets/placeholder-avatar.jpg';
 import '@xyflow/react/dist/style.css';
 import './Tree.css';
 import ManagePage from './ManagePage';
 import DetailPage from './DetailPage';
+import Layout from './Layout';
 
 
 const CARD_WIDTH = 120;
@@ -649,13 +650,17 @@ function TreeIndex() {
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<TreeIndex />} />
-      <Route path="/tree/:familyId" element={
-        <ReactFlowProvider>
-          <Tree />
-        </ReactFlowProvider>} />
-        <Route path="/detail/:id" element={< DetailPage/>}></Route>
-      <Route path="/manage" element={<ManagePage />} />
+      <Route element={<Layout />}>
+        <Route path='/' element={<div>LANDING PAGE</div>} />
+        <Route path="/trees" element={<TreeIndex />} />
+        <Route path="/tree/:familyId" element={
+          <ReactFlowProvider>
+            <Tree />
+          </ReactFlowProvider>
+        } />
+        <Route path="/detail/:id" element={<DetailPage />} />
+        <Route path="/manage" element={<ManagePage />} />
+      </Route>
     </Routes>
   );
 }
