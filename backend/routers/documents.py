@@ -7,7 +7,7 @@ from data.models import DocumentLink, DocumentPatch
 from fastapi import APIRouter, UploadFile
 from shared.db import db_conn
 
-MEDIA_DIR = Path(__file__).parent.resolve() / "media"
+MEDIA_DIR = Path(__file__).parent.parent.resolve() / "media"
 DOCUMENT_DIR = MEDIA_DIR / "documents"
 
 router = APIRouter(
@@ -105,13 +105,13 @@ def get_document(document_id: int):
         doc = con.execute(
             """
             SELECT * FROM documents WHERE id=?""",
-            (document_id),
+            (document_id,),
         ).fetchone()
 
         links = con.execute(
             """
             SELECT * FROM document_links WHERE document_id = ?;""",
-            (document_id),
+            (document_id,),
         ).fetchall()
 
         out = dict(doc)
