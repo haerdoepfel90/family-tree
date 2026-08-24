@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - `POST /api/v1/documents/{id}/links` — link to a subject
   - `DELETE /api/v1/documents/{id}/links` — unlink from a subject
 
+- New `/individuals/{id}/documents` endpoint to get all documents linked to a individual
+
 **Changed**
 - Moved endpoint groups into router modules in backend/routers
 - Consistently renamed endpoints to REST conventions (renamed /create endpoints)
@@ -30,10 +32,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
 **Removed**
-- Removed unused `/tree` api endpoint.
+- Removed unused `/tree` api endpoints.
 - Removed deprecated `/manage` api endpoint for unused manage page
 
 
+### Frontend
+
+**Added**
+- Individual detail page (`/detail/:id`) showing portrait, life dates, relationships and linked documents.
+- Link to the detail page from the tree's person sidebar panel.
+
+
+**Changed**
+- Consolidated frontend helper functions into a single `src/lib` module to deduplicate them:
+  - `people.js` —> `getPersonByID`, `formatName`
+  - `relatives.js` —> `getRelatives`
 
 ## [0.1.0] - 2026-08-22
 
