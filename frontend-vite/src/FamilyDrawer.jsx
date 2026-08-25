@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FormDrawer } from "./FormDrawer";
 
 export function FamilyDrawer({ open, editId, individuals, onClose, onSaved }) {
 	const isEdit = editId != null;
@@ -77,22 +78,14 @@ export function FamilyDrawer({ open, editId, individuals, onClose, onSaved }) {
 	}
 
 	return (
-		<aside className={`drawer${open ? " open" : ""}`}>
-			<div className="drawer__header">
-				<h2>{isEdit ? "Familie bearbeiten" : "Familie erstellen"}</h2>
-				<div className="drawer__header-actions">
-					{isEdit ? (
-						<button type="button" className="danger">
-							Familie löschen
-						</button>
-					) : (
-						""
-					)}
-					<button type="button" onClick={onClose}>
-						X
-					</button>
-				</div>
-			</div>
+		<FormDrawer
+			open={open}
+			title={isEdit ? "Familie bearbeiten" : "Familie erstellen"}
+			deleteLabel={isEdit ? "Familie löschen" : null}
+			editId={editId}
+			onClose={onClose}
+			onSave={submit}
+		>
 			<div className="drawer__field">
 				<label>
 					Ehepartner 1:{" "}
@@ -140,10 +133,6 @@ export function FamilyDrawer({ open, editId, individuals, onClose, onSaved }) {
 					Kind hinzufügen
 				</button>
 			</div>
-			<button type="button" className="drawer__save" onClick={submit}>
-				Speichern
-			</button>
-			<div className="drawer__meta">editId: {editId ?? "create"}</div>
-		</aside>
+		</FormDrawer>
 	);
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import placeholderAvatar from "./assets/placeholder-avatar.jpg";
+import { Drawer } from "./Drawer";
 import getRelatives from "./lib/relatives";
 
 export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
@@ -12,12 +13,12 @@ export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 			.then(setPerson);
 	}, [id]);
 
-	if (!person) return <aside className="person-detail open" />;
+	if (!person) return <Drawer open className="person-detail" />;
 
 	const relatives = getRelatives(id, families);
 
 	return (
-		<aside className="person-detail open">
+		<Drawer open className="person-detail">
 			<button type="button" className="person-detail__close" onClick={onClose}>
 				×
 			</button>
@@ -145,6 +146,6 @@ export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 					<Link to={`/detail/${person.id}`}>Detail Page</Link>
 				</div>
 			</section>
-		</aside>
+		</Drawer>
 	);
 }

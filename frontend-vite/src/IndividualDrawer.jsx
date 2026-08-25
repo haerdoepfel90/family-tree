@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FormDrawer } from "./FormDrawer";
 
 export function IndividualDrawer({ open, editId, onClose, onSaved }) {
 	const isEdit = editId != null;
@@ -75,22 +76,14 @@ export function IndividualDrawer({ open, editId, onClose, onSaved }) {
 	}
 
 	return (
-		<aside className={`drawer${open ? " open" : ""}`}>
-			<div className="drawer__header">
-				<h2>{isEdit ? "Person bearbeiten" : "Person erstellen"}</h2>
-				<div className="drawer__header-actions">
-					{isEdit ? (
-						<button type="button" className="danger">
-							Person löschen
-						</button>
-					) : (
-						""
-					)}
-					<button type="button" onClick={onClose}>
-						X
-					</button>
-				</div>
-			</div>
+		<FormDrawer
+			open={open}
+			title={isEdit ? "Person bearbeiten" : "Person erstellen"}
+			deleteLabel={isEdit ? "Person löschen" : null}
+			editId={editId}
+			onClose={onClose}
+			onSave={submit}
+		>
 			<div className="drawer__field">
 				<label>
 					Vorname:
@@ -163,10 +156,6 @@ export function IndividualDrawer({ open, editId, onClose, onSaved }) {
 					<input value={form.death_place} onChange={set("death_place")} />
 				</label>
 			</div>
-			<button type="button" className="drawer__save" onClick={submit}>
-				Speichern
-			</button>
-			<div className="drawer__meta">editId: {editId ?? "create"}</div>
-		</aside>
+		</FormDrawer>
 	);
 }
