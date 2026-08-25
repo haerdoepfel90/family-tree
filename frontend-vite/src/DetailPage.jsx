@@ -97,7 +97,7 @@ export default function DetailPage() {
 								<div className="detail-page__label">Geschwister</div>
 								{relatives.siblings.map((sid) => (
 									<Link
-										key={pid}
+										key={sid}
 										style={{ display: "block" }}
 										to={`/detail/${sid}`}
 									>
@@ -111,7 +111,7 @@ export default function DetailPage() {
 								<div className="detail-page__label">Partner</div>
 								{relatives.spouses.map((sid) => (
 									<Link
-										key={pid}
+										key={sid}
 										style={{ display: "block" }}
 										to={`/detail/${sid}`}
 									>
@@ -125,7 +125,7 @@ export default function DetailPage() {
 								<div className="detail-page__label">Kinder</div>
 								{relatives.children.map((cid) => (
 									<Link
-										key={pid}
+										key={cid}
 										style={{ display: "block" }}
 										to={`/detail/${cid}`}
 									>
