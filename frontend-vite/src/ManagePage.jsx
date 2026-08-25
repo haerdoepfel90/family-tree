@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import "./ManagePage.css";
 import { FamilyDrawer } from "./FamilyDrawer";
 import { IndividualDrawer } from "./IndividualDrawer";
-
-function getIndividualName(individual_id, peopleById) {
-	const given_name = peopleById.get(individual_id).given_name ?? ``;
-	const second_name = peopleById.get(individual_id).second_name ?? ``;
-	const third_name = peopleById.get(individual_id).third_name ?? ``;
-	const surname = peopleById.get(individual_id).surname ?? ``;
-	return `${given_name} ${second_name} ${third_name} ${surname}`;
-}
+import getPersonByID, { formatName } from "./lib/people.js";
 
 export default function ManagePage() {
 	const [individuals, setIndividuals] = useState([]);
@@ -101,8 +94,18 @@ export default function ManagePage() {
 					<tbody>
 						{families.map((fam) => (
 							<tr key={fam.id}>
-								<td>{getIndividualName(fam.partner1_id, peopleById)}</td>
-								<td>{getIndividualName(fam.partner2_id, peopleById)}</td>
+								<td>
+									{formatName(
+										getPersonByID(fam.partner1_id, peopleById),
+										"full",
+									)}
+								</td>
+								<td>
+									{formatName(
+										getPersonByID(fam.partner2_id, peopleById),
+										"full",
+									)}
+								</td>
 								<td>{fam.wedding_date}</td>
 								<td>
 									<button
