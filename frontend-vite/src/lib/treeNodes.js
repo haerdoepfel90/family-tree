@@ -114,7 +114,7 @@ function getPersonData(individual_id, peopleById) {
 	const person = peopleById.get(individual_id);
 	return {
 		label: formatName(person, "normal"),
-		given_name_full: `${person.given_name} ${person.second_name ?? ""} ${person.third_name ?? ""}`,
+		given_name_full: formatName(person, "given"),
 		surname: person.surname ?? "",
 		maiden_name: person.maiden_name ?? "",
 		birth_date: person.birth_date?.slice(0, 4) ?? "",
