@@ -1,21 +1,24 @@
 export default function getPersonByID(id, peopleByID) {
-  return peopleByID.get(Number(id)) ?? null;
+	return peopleByID.get(Number(id)) ?? null;
 }
 
-export function formatName(person, option='surname') {
-    if (!person) return '';
+export function formatName(person, option = "surname") {
+	if (!person) return "";
 
-    switch (option) {
-        case 'normal':
-            return `${person.given_name ?? ''} ${person.surname ?? ''}`
-    
-        case 'full':
-            return `${person.given_name ?? ''} ${person.second_name ?? ''} ${person.third_name ?? ''} ${person.surname ?? ''}`
+	switch (option) {
+		case "given":
+			return `${person.given_name ?? ""}`;
 
-        case 'surname':
-            return `${person.surname}`
+		case "normal":
+			return `${person.given_name ?? ""} ${person.surname ?? ""}`;
 
-        default:
-            break;
-    }
+		case "full":
+			return `${person.given_name ?? ""} ${person.second_name ?? ""} ${person.third_name ?? ""} ${person.surname ?? ""}`;
+
+		case "surname":
+			return `${person.surname}`;
+
+		default:
+			break;
+	}
 }
