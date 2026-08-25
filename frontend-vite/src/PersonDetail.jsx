@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import placeholderAvatar from "./assets/placeholder-avatar.jpg";
+import getRelatives from "./lib/relatives";
 
 export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 	const [person, setPerson] = useState(null);
@@ -13,19 +14,7 @@ export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 
 	if (!person) return <aside className="person-detail open" />;
 
-	const childOf = families.find((f) => f.children?.includes(id));
-	const parents = childOf
-		? [childOf.partner1_id, childOf.partner2_id].filter(Boolean)
-		: [];
-	const siblings = childOf ? childOf.children.filter((c) => c !== id) : [];
-
-	const partnerIn = families.filter(
-		(f) => f.partner1_id === id || f.partner2_id === id,
-	);
-	const spouses = partnerIn
-		.map((f) => (f.partner1_id === id ? f.partner2_id : f.partner1_id))
-		.filter(Boolean);
-	const children = partnerIn.flatMap((f) => f.children ?? []);
+	const relatives = getRelatives(id, families);
 
 	return (
 		<aside className="person-detail open">
@@ -65,11 +54,11 @@ export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 				)}
 			</section>
 			<section>
-				{parents.length > 0 && (
+				{relatives.parents.length > 0 && (
 					<>
 						<div className="person-detail__label">Eltern</div>
 						<div>
-							{parents.map((pid) => {
+							{relatives.parents.map((pid) => {
 								const p = peopleById.get(pid);
 								if (!p) return null;
 								return (
@@ -87,11 +76,11 @@ export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 					</>
 				)}
 
-				{siblings.length > 0 && (
+				{relatives.siblings.length > 0 && (
 					<>
 						<div className="person-detail__label">Geschwister</div>
 						<div>
-							{siblings.map((sid) => {
+							{relatives.siblings.map((sid) => {
 								const s = peopleById.get(sid);
 								if (!s) return null;
 								return (
@@ -109,11 +98,11 @@ export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 					</>
 				)}
 
-				{spouses.length > 0 && (
+				{relatives.spouses.length > 0 && (
 					<>
 						<div className="person-detail__label">Partner</div>
 						<div>
-							{spouses.map((sid) => {
+							{relatives.spouses.map((sid) => {
 								const s = peopleById.get(sid);
 								if (!s) return null;
 								return (
@@ -131,11 +120,11 @@ export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 					</>
 				)}
 
-				{children.length > 0 && (
+				{relatives.children.length > 0 && (
 					<>
 						<div className="person-detail__label">Kinder</div>
 						<div>
-							{children.map((cid) => {
+							{relatives.children.map((cid) => {
 								const c = peopleById.get(cid);
 								if (!c) return null;
 								return (
