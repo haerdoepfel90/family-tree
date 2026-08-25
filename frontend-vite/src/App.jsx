@@ -755,7 +755,7 @@ function TreeIndex() {
 				fetch("/api/v1/families").then((r) => r.json()),
 			]);
 			setPeopleById(new Map(people.map((p) => [p.id, p])));
-			setRoots(findRootFamilies(people, fams));
+			setRoots(findRootFamilies(fams));
 		})();
 	}, []);
 
