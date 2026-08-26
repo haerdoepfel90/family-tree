@@ -1,5 +1,5 @@
 import { Handle, Position } from "@xyflow/react";
-import { CARD_HEIGHT, CARD_WIDTH } from "./lib/treeConstants";
+import { CARD_HEIGHT, CARD_WIDTH } from "../lib/treeConstants";
 
 export function PersonNode({ data }) {
 	return (

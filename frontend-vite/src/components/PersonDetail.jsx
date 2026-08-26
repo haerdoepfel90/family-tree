@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import placeholderAvatar from "./assets/placeholder-avatar.jpg";
+import placeholderAvatar from "../assets/placeholder-avatar.jpg";
+import getRelatives from "../lib/relatives";
 import { Drawer } from "./Drawer";
-import getRelatives from "./lib/relatives";
 
 export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 	const [person, setPerson] = useState(null);

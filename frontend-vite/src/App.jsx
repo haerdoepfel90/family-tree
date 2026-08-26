@@ -2,11 +2,11 @@ import { ReactFlowProvider } from "@xyflow/react";
 import { Route, Routes } from "react-router";
 import "@xyflow/react/dist/style.css";
 import "./Tree.css";
-import DetailPage from "./DetailPage";
-import Layout from "./Layout";
-import ManagePage from "./ManagePage";
-import { Tree } from "./Tree";
-import { TreeIndex } from "./TreeIndex";
+import DetailPage from "./pages/DetailPage";
+import Layout from "./pages/Layout";
+import ManagePage from "./pages/ManagePage";
+import { Tree } from "./pages/Tree";
+import { TreeIndex } from "./pages/TreeIndex";
 
 export default function App() {
 	return (

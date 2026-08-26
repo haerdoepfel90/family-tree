@@ -7,12 +7,12 @@ import {
 } from "@xyflow/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { CARD_HEIGHT, CARD_WIDTH } from "./lib/treeConstants";
-import { buildTree, firstWalk, secondWalk } from "./lib/treeLayout";
-import { buildNodes } from "./lib/treeNodes";
-import { PersonDetail } from "./PersonDetail";
-import { nodeTypes } from "./treeNodes";
-import "./lib/treeConstants";
+import { PersonDetail } from "../components/PersonDetail";
+import { nodeTypes } from "../components/treeNodes";
+import { CARD_HEIGHT, CARD_WIDTH } from "../lib/treeConstants";
+import { buildTree, firstWalk, secondWalk } from "../lib/treeLayout";
+import { buildNodes } from "../lib/treeNodes";
+import "../lib/treeConstants";
 
 export function Tree() {
 	const { familyId } = useParams();

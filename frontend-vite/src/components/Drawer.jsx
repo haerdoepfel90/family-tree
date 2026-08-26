@@ -1,4 +1,4 @@
-import "./Drawer.css";
+import "../Drawer.css";
 
 export function Drawer({ open, className, children }) {
 	const classes = ["drawer", className, open ? "open" : null]

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import "./ManagePage.css";
-import { FamilyDrawer } from "./FamilyDrawer";
-import { IndividualDrawer } from "./IndividualDrawer";
-import getPersonByID, { formatName } from "./lib/people.js";
+import "../ManagePage.css";
+import { FamilyDrawer } from "../components/FamilyDrawer.jsx";
+import { IndividualDrawer } from "../components/IndividualDrawer.jsx";
+import getPersonByID, { formatName } from "../lib/people.js";
 
 export default function ManagePage() {
 	const [individuals, setIndividuals] = useState([]);

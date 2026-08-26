@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import placeholderAvatar from "./assets/placeholder-avatar.jpg";
-import "./DetailPage.css";
-import getPersonByID, { formatName } from "./lib/people";
-import getRelatives from "./lib/relatives";
+import placeholderAvatar from "../assets/placeholder-avatar.jpg";
+import "../DetailPage.css";
+import getPersonByID, { formatName } from "../lib/people";
+import getRelatives from "../lib/relatives";
 
 export default function DetailPage() {
 	const { id } = useParams();

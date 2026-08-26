@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import getPersonByID, { formatName } from "./lib/people";
+import getPersonByID, { formatName } from "../lib/people";
 
-import { findRootFamilies } from "./lib/relatives";
+import { findRootFamilies } from "../lib/relatives";
 
 export function TreeIndex() {
 	const [roots, setRoots] = useState([]);
