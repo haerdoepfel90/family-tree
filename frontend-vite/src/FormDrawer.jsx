@@ -7,6 +7,7 @@ export function FormDrawer({
 	editId,
 	onClose,
 	onSave,
+	onDelete,
 	children,
 }) {
 	return (
@@ -15,7 +16,7 @@ export function FormDrawer({
 				<h2>{title}</h2>
 				<div className="drawer__header-actions">
 					{deleteLabel ? (
-						<button type="button" className="danger">
+						<button type="button" className="danger" onClick={onDelete}>
 							{deleteLabel}
 						</button>
 					) : (

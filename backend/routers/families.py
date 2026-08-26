@@ -126,3 +126,11 @@ def get_families():
             }
         )
     return families
+
+@router.delete("/{id}")
+def delete_family(id: int):
+    with db_conn() as con:
+        con.execute("DELETE FROM families WHERE id=?", (id,))
+        con.commit()
+
+    return {"ok": True}

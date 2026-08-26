@@ -53,6 +53,18 @@ export function IndividualDrawer({ open, editId, onClose, onSaved }) {
 			});
 	}, [editId, isEdit]);
 
+	async function handleDelete() {
+		if (!confirm("Diese Person wirklich löschen?")) return;
+		const res = await fetch(`/api/v1/individuals/${editId}`, {
+			method: "DELETE",
+		});
+		if (res.ok) {
+			onSaved();
+		} else {
+			console.log("delete failed", res.status);
+		}
+	}
+
 	async function submit(e) {
 		e.preventDefault();
 		const data = {};
@@ -83,6 +95,7 @@ export function IndividualDrawer({ open, editId, onClose, onSaved }) {
 			editId={editId}
 			onClose={onClose}
 			onSave={submit}
+			onDelete={isEdit ? handleDelete : undefined}
 		>
 			<div className="drawer__field">
 				<label>

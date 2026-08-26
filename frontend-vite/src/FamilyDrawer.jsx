@@ -57,6 +57,18 @@ export function FamilyDrawer({ open, editId, individuals, onClose, onSaved }) {
 			});
 	}, [editId, isEdit]);
 
+	async function handleDelete() {
+		if (!confirm("Diese Familie wirklich löschen?")) return;
+		const res = await fetch(`/api/v1/families/${editId}`, {
+			method: "DELETE",
+		});
+		if (res.ok) {
+			onSaved();
+		} else {
+			console.log("delete failed", res.status);
+		}
+	}
+
 	async function submit(e) {
 		e.preventDefault();
 		const body = {
@@ -85,6 +97,7 @@ export function FamilyDrawer({ open, editId, individuals, onClose, onSaved }) {
 			editId={editId}
 			onClose={onClose}
 			onSave={submit}
+			onDelete={isEdit ? handleDelete : undefined}
 		>
 			<div className="drawer__field">
 				<label>
