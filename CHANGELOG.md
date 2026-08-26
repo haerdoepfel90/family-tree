@@ -5,15 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
-## [UNRELEASED]
+## [0.3.0] - 2026-08-26
 
 ### Frontend
+**Added**
+- Added landing page at `/` (placeholder for now).
+- Added option `given` to `formatName` which returns a person's given name.
+- Added `DELETE /api/v1/families/{id}` endpoint.
+- Wired up delete for individuals and families in `ManagePage`: a confirmation prompt, calling the respective `DELETE` endpoint, then closing the drawer and refreshing the tables on success.
+
 **Changed**
 - Migrated frontend routing from `react-router-dom` to `react-router` v8.
 - Restructured routes to use a shared `Layout` component to have a shared header.
 - Moved root-tree index from `/` to `/trees`.
-- Added landing page at `/` (placeholder for now).
-
+- Split family tree view out of `App.jsx` into dedicated modules.
+- Moved `findRootFamilies` from `App.jsx` into `lib/relatives.js`.
+- Extracted `TreeIndex` out of `App.jsx` into its own module and replaced `nameOf` with `formatName`.
+- Replaced inline computing of relatives arrays in `PersonDetail.jsx` with `getRelatives`.
+- Replaced `given_name_full` computation in `getPersonData` with `formatName(person, "given")`.
+- Split `FamilyDrawer` and `IndividualDrawer` into dedicated modules out of `ManagePage`.
+- Replaced `getIndividualName` in `ManagePage.jsx` with `formatName`.
+- Unified the `.drawer`/`.person-detail` sliding side panels into a shared `Drawer` component, with `FormDrawer` wrapping the form-specific chrome used by `IndividualDrawer`/`FamilyDrawer`.
+- Split `/src` into `/pages` and `/components`
+- Wrapped `loadTables` in `useCallback` in `ManagePage`.
 
 ## [0.2.0] - 2026-08-24
 
