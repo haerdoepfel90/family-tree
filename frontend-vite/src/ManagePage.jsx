@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./ManagePage.css";
 import { FamilyDrawer } from "./FamilyDrawer";
 import { IndividualDrawer } from "./IndividualDrawer";
@@ -10,7 +10,7 @@ export default function ManagePage() {
 	const [personDrawer, setPersonDrawer] = useState(null);
 	const [familyDrawer, setFamilyDrawer] = useState(null);
 
-	async function loadTables() {
+	const loadTables = useCallback(async () => {
 		const [ppl, fams] = await Promise.all([
 			fetch("/api/v1/individuals").then((r) => r.json()),
 			fetch("/api/v1/families").then((r) => r.json()),
@@ -30,11 +30,11 @@ export default function ManagePage() {
 
 		setIndividuals(ppl);
 		setFamilies(fams);
-	}
+	}, []);
 
 	useEffect(() => {
 		loadTables();
-	}, []);
+	}, [loadTables]);
 
 	const peopleById = new Map(individuals.map((ind) => [ind.id, ind]));
 
