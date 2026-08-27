@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router";
 import "@xyflow/react/dist/style.css";
 import "./Tree.css";
 import DetailPage from "./pages/DetailPage";
+import { HomePage } from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import ManagePage from "./pages/ManagePage";
 import { Tree } from "./pages/Tree";
@@ -12,7 +13,7 @@ export default function App() {
 	return (
 		<Routes>
 			<Route element={<Layout />}>
-				<Route path="/" element={<div>LANDING PAGE</div>} />
+				<Route path="/" element={<HomePage />} />
 				<Route path="/trees" element={<TreeIndex />} />
 				<Route
 					path="/tree/:familyId"
