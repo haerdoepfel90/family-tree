@@ -4,6 +4,7 @@ from pathlib import Path
 from data.models import Individual, IndividualPatch
 from fastapi import APIRouter, UploadFile
 from shared.db import db_conn
+import uuid
 
 MEDIA_DIR = Path(__file__).parent.parent.resolve() / "media"
 PORTRAIT_DIR = MEDIA_DIR / "portraits"
@@ -51,7 +52,7 @@ async def upload_portrait(individual_id: int, file: UploadFile):
     ext = Path(file.filename).suffix.lower()
     print(ext)
 
-    filename = f"{individual_id}_portrait{ext}"
+    filename = f"{uuid.uuid4()}{ext}"
     print(filename)
 
     DESTINATION = PORTRAIT_DIR / filename
