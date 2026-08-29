@@ -5,7 +5,7 @@ from data.models import Individual, IndividualPatch
 from fastapi import APIRouter, UploadFile
 from shared.db import db_conn
 
-MEDIA_DIR = Path(__file__).parent.resolve() / "media"
+MEDIA_DIR = Path(__file__).parent.parent.resolve() / "media"
 PORTRAIT_DIR = MEDIA_DIR / "portraits"
 
 router = APIRouter(
