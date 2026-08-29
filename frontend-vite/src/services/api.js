@@ -26,3 +26,19 @@ export const getIndividualDetails = async (id) => {
 		images,
 	};
 };
+
+export const updateIndividual = (id, data) =>
+	fetch(`/api/v1/individuals/${id}`, {
+		method: "PATCH",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(data),
+	});
+
+export const uploadPortrait = (id, file) => {
+	const formData = new FormData();
+	formData.append("file", file);
+	return fetch(`/api/v1/individuals/${id}/portrait`, {
+		method: "POST",
+		body: formData,
+	});
+};
