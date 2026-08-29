@@ -45,7 +45,7 @@ export function IndividualsIndex() {
 						</div>
 					</div>
 					<div className="individuals-index__person-card-right">
-						<Link to={`/detail/${p.id}`}>Ansehen &rarr;</Link>
+						<Link to={`/individual/detail/${p.id}`}>Ansehen &rarr;</Link>
 					</div>
 				</div>
 			))}

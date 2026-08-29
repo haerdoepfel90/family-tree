@@ -2,8 +2,8 @@ import { ReactFlowProvider } from "@xyflow/react";
 import { Route, Routes } from "react-router";
 import "@xyflow/react/dist/style.css";
 import "./Tree.css";
-import DetailPage from "./pages/DetailPage";
 import { HomePage } from "./pages/HomePage";
+import IndividualDetail from "./pages/IndividualDetail";
 import { IndividualsIndex } from "./pages/IndividualsIndex";
 import Layout from "./pages/Layout";
 import ManagePage from "./pages/ManagePage";
@@ -25,7 +25,7 @@ export default function App() {
 					}
 				/>
 				<Route path="/individuals" element={<IndividualsIndex />} />
-				<Route path="/detail/:id" element={<DetailPage />} />
+				<Route path="/individual/detail/:id" element={<IndividualDetail />} />
 				<Route path="/manage" element={<ManagePage />} />
 			</Route>
 		</Routes>

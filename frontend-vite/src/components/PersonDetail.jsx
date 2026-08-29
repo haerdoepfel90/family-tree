@@ -143,7 +143,7 @@ export function PersonDetail({ id, families, peopleById, onClose, onSelect }) {
 					</>
 				)}
 				<div>
-					<Link to={`/detail/${person.id}`}>Detail Page</Link>
+					<Link to={`/individual/detail/${person.id}`}>Detail Page</Link>
 				</div>
 			</section>
 		</Drawer>
