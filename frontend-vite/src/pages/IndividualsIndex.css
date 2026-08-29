@@ -1,0 +1,90 @@
+.individuals-index__body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+	margin: var(--space-4);
+}
+
+.individuals-index__header {
+	font-size: var(--text-2xl);
+	font-family: var(--font-sans);
+	font-weight: var(--weight-medium);
+	letter-spacing: var(--track-tight);
+	line-height: var(--leading-tight);
+	color: var(--ink);
+	margin: 0 calc(-1 * var(--space-4));
+	padding: 0 var(--space-4) var(--space-3);
+	border-bottom: var(--hairline-border-width) solid var(--hairline-border-color);
+}
+
+.individuals-index__person-card {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	border: var(--hairline-border-width) solid var(--hairline-border-color);
+	border-radius: var(--radius);
+	background: var(--surface);
+	color: var(--ink);
+	padding: var(--space-3);
+}
+
+.individuals-index__person-card-left {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: var(--space-3);
+}
+
+.individuals-index__person-card-img {
+	border-top: var(--top-border-width) solid var(--top-border-color);
+	border-left: var(--hairline-border-width) solid var(--hairline-border-color);
+	border-right: var(--hairline-border-width) solid var(--hairline-border-color);
+	border-bottom: var(--hairline-border-width) solid var(--hairline-border-color);
+	width: 90px;
+	aspect-ratio: 1 / 1;
+	background-color: var(--surface-sunken);
+	overflow: hidden;
+}
+
+.individuals-index__person-card-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.individuals-index__person-card-info {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1);
+	font-family: var(--font-sans);
+}
+
+.individuals-index__person-card-info-label {
+	font-size: var(--text-md);
+	font-weight: var(--weight-medium);
+}
+
+.individuals-index__person-card-info-meta {
+	font-size: var(--text-base);
+	color: var(--muted);
+}
+
+.individuals-index__person-card-info-mark {
+	font-family: var(--font-mono);
+}
+
+.individuals-index__person-card-right a {
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	font-weight: var(--weight-medium);
+	text-transform: uppercase;
+	letter-spacing: var(--track-nav);
+	color: var(--accent);
+	text-decoration: none;
+}
+
+.individuals-index__person-card-right a:hover {
+	text-decoration: underline;
+}

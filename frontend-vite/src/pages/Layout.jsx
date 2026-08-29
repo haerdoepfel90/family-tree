@@ -8,7 +8,7 @@ export default function Layout() {
 				<div className="header-left">
 					<NavLink to="/">FamilyTree</NavLink>
 					<NavLink to="/trees">Stammbäume</NavLink>
-					<NavLink to="/manage">Personen</NavLink>
+					<NavLink to="/individuals">Personen</NavLink>
 					<NavLink to="/families">Familien</NavLink>
 				</div>
 				<div className="header-right">
