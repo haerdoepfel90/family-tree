@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import "../HomePage.css";
 import placeholderAvatar from "../assets/placeholder-avatar.jpg";
 import { PersonCardPortrait } from "../components/ui/elements.jsx";
-import getPersonByID, { formatName } from "../lib/people.js";
+import { formatName } from "../lib/people.js";
 
 export function HomePage() {
 	const [persons, setPersons] = useState([]);
-	const [stats, setStats] = useState({});
 
 	useEffect(() => {
 		fetch("/api/v1/individuals")
