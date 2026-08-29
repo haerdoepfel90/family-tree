@@ -1,75 +1,76 @@
 #root {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  --hairline-border-color: #e0ded7;
-  --hairline-border-width: 1px;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	--hairline-border-color: #e0ded7;
+	--hairline-border-width: 1px;
 }
 main {
-  flex: 1;
-  min-height: 0;
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
 }
-
 .app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    height: 72px;
-    border-top: 3px solid #c1121f;
-    border-bottom: var(--hairline-border-width) solid var(--hairline-border-color);
-    font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
-    border-left: var(--hairline-border-width) solid var(--hairline-border-color);
-    border-right: var(--hairline-border-width) solid var(--hairline-border-color);
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+	height: 72px;
+	border-top: 3px solid #c1121f;
+	border-bottom: var(--hairline-border-width) solid var(--hairline-border-color);
+	font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+	border-left: var(--hairline-border-width) solid var(--hairline-border-color);
+	border-right: var(--hairline-border-width) solid var(--hairline-border-color);
 }
 
 .app-header .header-left,
 .app-header .header-right {
-    display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
-.header-left > *, .header-right > * {
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
+.header-left > *,
+.header-right > * {
+	display: flex;
+	align-items: center;
+	padding: 0 16px;
 }
 
 .header-left > * + * {
-    border-left: var(--hairline-border-width) solid var(--hairline-border-color);
+	border-left: var(--hairline-border-width) solid var(--hairline-border-color);
 }
 .header-right > * {
-    border-left: var(--hairline-border-width) solid var(--hairline-border-color);
+	border-left: var(--hairline-border-width) solid var(--hairline-border-color);
 }
 
 .header-left > *:first-child {
-  font-weight: 1000;
-  font-size: 25px;
-  letter-spacing: -0.01em;
-  color: #1a1a1a;
+	font-weight: 1000;
+	font-size: 25px;
+	letter-spacing: -0.01em;
+	color: #1a1a1a;
 }
 
 .header-left a {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #999;
-  text-decoration: none;
-  transition: color 0.15s;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #999;
+	text-decoration: none;
+	transition: color 0.15s;
 }
 
 .header-left a:hover {
-  color: #1a1a1a;
+	color: #1a1a1a;
 }
 
 .header-right input {
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: inherit;
-  font-size: 13px;
-  width: 180px;
-  height: 100%;
+	border: none;
+	outline: none;
+	background: transparent;
+	font-family: inherit;
+	font-size: 13px;
+	width: 180px;
+	height: 100%;
 }
 .header-right input::placeholder {
-  color: #b8b4a8;
+	color: #b8b4a8;
 }
