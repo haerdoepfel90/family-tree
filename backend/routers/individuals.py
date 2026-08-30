@@ -1,11 +1,11 @@
 import shutil
+import uuid
 from pathlib import Path
 
 from data.models import Individual, IndividualPatch
 from fastapi import APIRouter, UploadFile
 from fastapi.exceptions import HTTPException
 from shared.db import db_conn
-import uuid
 
 MEDIA_DIR = Path(__file__).parent.parent.resolve() / "media"
 PORTRAIT_DIR = MEDIA_DIR / "portraits"
