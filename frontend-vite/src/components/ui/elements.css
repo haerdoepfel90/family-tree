@@ -40,7 +40,7 @@
 .person-card-portrait__img-frame {
 	width: 100%;
 	aspect-ratio: 1 / 1;
-	border-top: var(--top-border-width) solid var(--top-border-color);
+	border-top: var(--hairline-border-width) solid var(--hairline-border-color);
 	border-left: var(--hairline-border-width) solid var(--hairline-border-color);
 	border-right: var(--hairline-border-width) solid var(--hairline-border-color);
 	border-bottom: var(--hairline-border-width) solid var(--hairline-border-color);

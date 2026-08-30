@@ -91,3 +91,16 @@ export const uploadDocument = (file) => {
 		body: formData,
 	}).then((r) => r.json());
 };
+
+export const getHomePageContent = async () => {
+	const [allPeople, stats] = await Promise.all([
+		fetch("/api/v1/individuals").then((r) => r.json()),
+		fetch("/api/v1/statistics").then((r) => r.json()),
+	]);
+
+	const people = [...allPeople]
+		.sort(() => Math.random() - 0.5) // shuffle
+		.slice(0, 23); // take 23
+
+	return { people, stats };
+};
