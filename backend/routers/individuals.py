@@ -3,6 +3,7 @@ from pathlib import Path
 
 from data.models import Individual, IndividualPatch
 from fastapi import APIRouter, UploadFile
+from fastapi.exceptions import HTTPException
 from shared.db import db_conn
 import uuid
 
@@ -98,6 +99,9 @@ def get_individual(individual_id: int):
         person = con.execute(
             "SELECT * FROM individuals WHERE id=?;", (individual_id,)
         ).fetchone()
+
+        if person is None:
+            raise HTTPException(status_code=404, detail="individual not found")
 
     return dict(person)
 

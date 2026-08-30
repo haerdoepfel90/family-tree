@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../HomePage.css";
 import placeholderAvatar from "../assets/placeholder-avatar.jpg";
 import { PersonCardPortrait } from "../components/ui/elements.jsx";
