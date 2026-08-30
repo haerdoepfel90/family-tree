@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 
+## [0.4.0] - 2026-08-28
+
+### Frontend
+**Added**
+- Added `:root` variables in `index.css` for unified styling across pages and ui-elements.
+- Added `/src/components/ui/` to create modules for unified ui-elements. Current list of elements:
+  - `LinkTag` -> a tag-like element that shows an existing link to another record, with an optional remove (×) button; renders as an "add link" prompt when nothing is linked yet.
+  - `PersonCardPortrait` -> a card like element which renders a image with a label below it.
+- Added `Modal` component, usable throughout the app for e.g. `DocumentEditor` or `DocumentUploader`.
+- Added Homepage content on `"/"` (ON THIS DAY section still a placeholder).
+- Adapted HomePage to show a random subset of 15 people on page load.
+- Added Styling to `TreeIndex`.
+- Added `IndividualsIndex` under `/individuals`, replacing `/manage`.
+- Added `IndividualDetail` under `/individual/detail/:id`, replacing `DetailPage`.
+- Added edit person modal, accessible through `IndividualDetail`.
+- Added `DocumentEditor` and `DocumentUploader`.
+
+**Changed**
+- Migrated `/detail/:id` to `/individual/detail/:id`.
+- Moved the "Bearbeiten" button on `IndividualDetail` into the top identity card.
+- Header stays fixed at the top while scrolling.
+
+**Fixed**
+- `IndividualDetail` crashed when a linked document/photo had no `date` set.
+
+### Backend
+
+**Changed**
+- `GET /api/v1/individuals` now orders by `given_name, birth_date` (was `birth_date, given_name`).
+
+
 ## [0.3.0] - 2026-08-26
 
 ### Frontend
@@ -13,6 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added option `given` to `formatName` which returns a person's given name.
 - Added `DELETE /api/v1/families/{id}` endpoint.
 - Wired up delete for individuals and families in `ManagePage`: a confirmation prompt, calling the respective `DELETE` endpoint, then closing the drawer and refreshing the tables on success.
+- Addded `IndividualsIndex` content on `/individuals`.
 
 **Changed**
 - Migrated frontend routing from `react-router-dom` to `react-router` v8.
