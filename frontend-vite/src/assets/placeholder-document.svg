@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 297">
+	<title>Dokument</title>
+	<path d="M17 24 H171 L193 46 V273 H17 Z" fill="none" stroke="#111111" stroke-width="5" stroke-linejoin="round"/>
+	<path d="M171 24 V46 H193" fill="none" stroke="#111111" stroke-width="5" stroke-linejoin="round"/>
+	<line x1="35" y1="76" x2="93" y2="76" stroke="#111111" stroke-width="5"/>
+	<line x1="35" y1="100" x2="175" y2="100" stroke="#111111" stroke-width="5"/>
+	<line x1="35" y1="118" x2="175" y2="118" stroke="#111111" stroke-width="5"/>
+	<line x1="35" y1="136" x2="175" y2="136" stroke="#111111" stroke-width="5"/>
+	<line x1="35" y1="154" x2="175" y2="154" stroke="#111111" stroke-width="5"/>
+	<line x1="35" y1="172" x2="175" y2="172" stroke="#111111" stroke-width="5"/>
+	<line x1="35" y1="196" x2="140" y2="196" stroke="#111111" stroke-width="8"/>
+</svg>
