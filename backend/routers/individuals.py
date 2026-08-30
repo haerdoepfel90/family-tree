@@ -85,7 +85,7 @@ def get_individuals():
 
     with db_conn() as con:
         peoples = con.execute(
-            "SELECT * FROM individuals ORDER BY birth_date, given_name;"
+            "SELECT * FROM individuals ORDER BY given_name, birth_date;"
         ).fetchall()
 
     return [dict(person) for person in peoples]
