@@ -4,8 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.5.0] - YYYY-MM-DD
 
-## [0.4.0] - 2026-08-28
+### Frontend
+**Added**
+- Added `getHomePageContent` and `getIndividualsIndexContent` to `api.js`, consolidating the ad-hoc `fetch` calls previously inline in `HomePage`/`IndividualsIndex`.
+- `HomePage` now shows real individuals/families/documents counts (was hardcoded `XX`), backed by the new statistics endpoint.
+- `IndividualsIndex` header now shows the actual number of people (was hardcoded `XX`).
+
+**Changed**
+- `PersonCardPortrait`'s image frame now always uses a hairline top border instead of the thick accent border.
+- `IndividualsIndex` person cards use a hairline top border when the individual has a real portrait, keeping the thick accent border for placeholder avatars.
+
+**Fixed**
+- `HomePage` crashed on load, reading `statistics.counts` before the stats fetch had resolved.
+
+### Backend
+**Added**
+- Added `GET /api/v1/statistics` endpoint, returning counts of individuals, families, and documents.
+
+
+## [0.4.0] - 2026-08-30
 
 ### Frontend
 **Added**

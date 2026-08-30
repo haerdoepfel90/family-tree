@@ -13,9 +13,9 @@
 - [ ] **Medium** - `IndividualDetail` doesn't refresh its Fotos/Dokumente tiles after editing a document or its links; requires a manual reload.
 - [ ] **Low** - none of the frontend API calls (`updateIndividual`, `uploadPortrait`, `updateDocument`, `linkDocument`, `unlinkDocument`, `uploadDocument`) check `response.ok` — failures fail silently.
 - [ ] **Low** - remove unused `useAsyncError` import in `IndividualDetail.jsx`.
+- [ ] **Low** - remove unused `use` import in `HomePage.jsx`.
 - [ ] **Low** - Compute the "Generation" number on `IndividualDetail`/`TreeIndex`, currently hardcoded as `--X--`/`XX Generationen`.
-- [ ] **Low** - extract a shared `useIndividualsAndFamilies` data-fetching hook — `Tree.jsx`, `TreeIndex.jsx`, `IndividualDetail.jsx`, `ManagePage.jsx`, `HomePage.jsx`, `IndividualsIndex.jsx`, and `DocumentEditor.jsx` (via `getIndividuals`) each fetch individuals/families independently.
-- [ ] **High** - add a Document section button in `IndividualDrawer`
+- [ ] **Low** - extract a shared `useIndividualsAndFamilies` data-fetching hook — `HomePage`/`IndividualsIndex` now go through dedicated `api.js` functions (`getHomePageContent`, `getIndividualsIndexContent`) instead of inline `fetch`, but each still fetches independently; `Tree.jsx`, `TreeIndex.jsx`, `IndividualDetail.jsx`, `ManagePage.jsx`, and `DocumentEditor.jsx` (via `getIndividuals`) also fetch individuals/families on their own.
 
 
 ### Styling
