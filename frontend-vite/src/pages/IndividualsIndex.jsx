@@ -3,25 +3,28 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import placeholderAvatar from "./../assets/placeholder-avatar.jpg";
 import { formatName } from "../lib/people";
+import { getIndividualsIndexContent } from "../services/api";
 
 export function IndividualsIndex() {
 	const [people, setPeople] = useState([]);
 
 	useEffect(() => {
-		fetch("/api/v1/individuals")
-			.then((r) => r.json())
-			.then((data) => {
-				setPeople(data);
-			});
+		getIndividualsIndexContent().then(setPeople);
 	}, []);
 
 	return (
 		<div className="individuals-index__body">
-			<div className="individuals-index__header">Personen &middot; XX</div>
+			<div className="individuals-index__header">{`Personen \u00B7 ${people.length}`}</div>
 			{people.map((p) => (
 				<div key={p.id} className="individuals-index__person-card">
 					<div className="individuals-index__person-card-left">
-						<div className="individuals-index__person-card-img">
+						<div
+							className={
+								p.portrait_url
+									? "individuals-index__person-card-img individuals-index__person-card-img--has-portrait"
+									: "individuals-index__person-card-img"
+							}
+						>
 							<img
 								src={p.portrait_url || placeholderAvatar}
 								alt={formatName(p, "normal")}

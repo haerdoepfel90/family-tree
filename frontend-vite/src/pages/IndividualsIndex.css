@@ -47,6 +47,11 @@
 	overflow: hidden;
 }
 
+.individuals-index__person-card-img--has-portrait {
+	border-top-width: var(--hairline-border-width);
+	border-top-color: var(--hairline-border-color);
+}
+
 .individuals-index__person-card-img img {
 	width: 100%;
 	height: 100%;

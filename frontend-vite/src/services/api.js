@@ -104,3 +104,7 @@ export const getHomePageContent = async () => {
 
 	return { people, stats };
 };
+
+export const getIndividualsIndexContent = async () => {
+	return fetch("/api/v1/individuals").then((r) => r.json());
+};
