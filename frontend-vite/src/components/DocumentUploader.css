@@ -1,0 +1,73 @@
+.document-uploader__dropzone {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-2);
+	min-height: 160px;
+	border: var(--hairline-border-width) dashed var(--hairline-border-color);
+	padding: var(--space-4);
+	cursor: pointer;
+	transition: border-color 0.15s ease;
+}
+
+.document-uploader__dropzone:hover {
+	border-color: var(--ink);
+}
+
+.document-uploader__dropzone--staged {
+	border-style: solid;
+	border-color: var(--ink);
+}
+
+.document-uploader__file-input {
+	display: none;
+}
+
+.document-uploader__hint {
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	color: var(--muted);
+	text-align: center;
+	word-break: break-word;
+}
+
+.document-uploader__dropzone--staged .document-uploader__hint {
+	color: var(--ink);
+	font-weight: var(--weight-medium);
+}
+
+.document-uploader__actions {
+	display: flex;
+	margin-top: var(--space-3);
+}
+
+.document-uploader__upload-button {
+	appearance: none;
+	width: 100%;
+	border: var(--hairline-border-width) solid var(--ink);
+	background: var(--surface);
+	padding: var(--space-2) var(--space-3);
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	color: var(--ink);
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		color 0.15s ease;
+}
+
+.document-uploader__upload-button:hover {
+	background: var(--ink);
+	color: var(--surface);
+}
+
+.document-uploader__upload-button:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+
+.document-uploader__upload-button:disabled:hover {
+	background: var(--surface);
+	color: var(--ink);
+}

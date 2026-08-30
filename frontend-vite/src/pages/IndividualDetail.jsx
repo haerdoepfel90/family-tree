@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useAsyncError, useParams } from "react-router";
 import placeholderAvatar from "./../assets/placeholder-avatar.jpg";
 import "./IndividualDetail.css";
+import { DocumentEditor } from "../components/DocumentEditor";
+import { DocumentUploader } from "../components/DocumentUploader";
 import { Modal } from "../components/Modal";
 import { DocumentTile, ImageTile } from "../components/ui/elements";
 import getPersonByID, { formatName } from "../lib/people";
@@ -16,6 +18,8 @@ export default function IndividualDetail() {
 	const [details, setDetails] = useState(null);
 	const [editOpen, setEditOpen] = useState(false);
 	const [portraitFile, setPortraitFile] = useState(null);
+	const [editDocumentOpen, setEditDocumentOpen] = useState(null);
+	const [uploadDocumentOpen, setUploadDocumentOpen] = useState(null);
 
 	const portraitPreview = useMemo(
 		() => (portraitFile ? URL.createObjectURL(portraitFile) : null),
@@ -79,14 +83,14 @@ export default function IndividualDetail() {
 
 	return (
 		<div className="individual-detail__body">
-			<button
-				type="button"
-				className="individual-detail__edit-button"
-				onClick={() => setEditOpen(true)}
-			>
-				Bearbeiten
-			</button>
 			<div className="individual-detail__top-card">
+				<button
+					type="button"
+					className="individual-detail__edit-button"
+					onClick={() => setEditOpen(true)}
+				>
+					Bearbeiten
+				</button>
 				<div className="individual-detail__top-card-left">
 					<div className="individual-detail__portrait">
 						<img
@@ -202,7 +206,16 @@ export default function IndividualDetail() {
 				</div>
 			</div>
 			<div className="individual-detail__images-card">
-				<div className="individual-detail__image-card-title">Fotos</div>
+				<div className="individual-detail__card-header">
+					<div className="individual-detail__image-card-title">Fotos</div>
+					<button
+						type="button"
+						className="individual-detail__add-button"
+						onClick={() => setUploadDocumentOpen({ kind: "photo" })}
+					>
+						+ Hinzufügen
+					</button>
+				</div>
 				<div className="individual-detail__image-card-grid">
 					{images.length > 0 &&
 						images.map((img) => (
@@ -210,13 +223,26 @@ export default function IndividualDetail() {
 								key={img.id}
 								thumbnail={null}
 								label={img.display_name}
-								date={img.date.slice(0, 4)}
+								date={img.date ? img.date.slice(0, 4) : ""}
+								fileUrl={`/media/documents/${img.uuid}${img.ext}`}
+								onEdit={() => setEditDocumentOpen(img)}
 							/>
 						))}
 				</div>
 			</div>
 			<div className="individual-detail__documents-card">
-				<div className="individual-detail__document-card-title">Dokumente</div>
+				<div className="individual-detail__card-header">
+					<div className="individual-detail__document-card-title">
+						Dokumente
+					</div>
+					<button
+						type="button"
+						className="individual-detail__add-button"
+						onClick={() => setUploadDocumentOpen({ kind: "document" })}
+					>
+						+ Hinzufügen
+					</button>
+				</div>
 				<div className="individual-detail__document-card-grid">
 					{documents.length > 0 &&
 						documents.map((doc) => (
@@ -224,7 +250,9 @@ export default function IndividualDetail() {
 								key={doc.id}
 								thumbnail={null}
 								label={doc.display_name}
-								date={doc.date.slice(0, 4)}
+								date={doc.date ? doc.date.slice(0, 4) : ""}
+								fileUrl={`/media/documents/${doc.uuid}${doc.ext}`}
+								onEdit={() => setEditDocumentOpen(doc)}
 							/>
 						))}
 				</div>
@@ -386,6 +414,21 @@ export default function IndividualDetail() {
 					</button>
 				</div>
 			</Modal>
+			<DocumentEditor
+				doc={editDocumentOpen}
+				open={editDocumentOpen != null}
+				onClose={() => setEditDocumentOpen(null)}
+				peopleById={peopleByID}
+			/>
+			<DocumentUploader
+				open={uploadDocumentOpen != null}
+				kind={uploadDocumentOpen?.kind}
+				onClose={() => setUploadDocumentOpen(null)}
+				onUploaded={(newDoc) => {
+					setUploadDocumentOpen(null);
+					setEditDocumentOpen(newDoc);
+				}}
+			/>
 		</div>
 	);
 }

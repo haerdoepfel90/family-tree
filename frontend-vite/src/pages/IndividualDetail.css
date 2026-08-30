@@ -6,7 +6,9 @@
 }
 
 .individual-detail__edit-button {
-	align-self: flex-start;
+	position: absolute;
+	top: var(--space-3);
+	right: var(--space-3);
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	font-weight: var(--weight-medium);
@@ -140,6 +142,7 @@
 }
 
 .individual-detail__top-card {
+	position: relative;
 	display: flex;
 	width: 100%;
 	gap: var(--space-4);
@@ -287,8 +290,6 @@
 	font-size: var(--text-lg);
 	font-weight: var(--weight-bold);
 	color: var(--ink);
-	padding-bottom: var(--space-2);
-	border-bottom: var(--hairline-border-width) solid var(--hairline-border-color);
 }
 
 .individual-detail__document-card-grid {
@@ -314,8 +315,31 @@
 	font-size: var(--text-lg);
 	font-weight: var(--weight-bold);
 	color: var(--ink);
+}
+
+.individual-detail__card-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	padding-bottom: var(--space-2);
 	border-bottom: var(--hairline-border-width) solid var(--hairline-border-color);
+}
+
+.individual-detail__add-button {
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	font-weight: var(--weight-medium);
+	text-transform: uppercase;
+	letter-spacing: var(--track-nav);
+	color: var(--accent);
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.individual-detail__add-button:hover {
+	text-decoration: underline;
 }
 
 .individual-detail__image-card-grid {
